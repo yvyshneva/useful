@@ -1,9 +1,13 @@
 <?php
 require_once __DIR__ . '/db_config.php';
 
+/**
+ * Establish and return a PDO database connection
+ * 
+ * @param string $env The environment to use ('test' or 'prod')
+ * @return PDO The PDO database connection
+ */
 function getDbConnection($env = 'test') {
-    """ Establish and return a PDO database connection """
-
     // prepare DSN string using values from the config file
     $dbConfig = getDbConfig($env);
     $dsn = "mysql:host={$dbConfig['host']};port={$dbConfig['port']};dbname={$dbConfig['dbname']};charset=utf8mb4";
@@ -16,8 +20,16 @@ function getDbConnection($env = 'test') {
     return $dbConnection;
 }
 
+
+/**
+ * Log database error messages using a stored procedure
+ * 
+ * @param string $scriptName The name of the script where the error occurred
+ * @param string $message The error message to log
+ * @param string $env The environment to use ('test' or 'prod')
+ * @return void
+ */
 function logDBError($scriptName, $message, $env = 'test') {
-    """ Log database error messages using a stored procedure """
     try {
         $conn = getDbConnection($env);
 
